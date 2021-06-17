@@ -5,6 +5,12 @@ import IconButton from '@material-ui/core/IconButton';
 
 import ServerMemberPage from './ServerMemberPage';
 import ServerChannel from './ServerChannel';
+import ServerTalkArea from './ServerTalkArea';
+
+import Doge from '../../../img/doge.png';
+import Avatar from '@material-ui/core/Avatar';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 
 var GRAY_1 = '#202225';
 var GRAY_2 = '#2F3136';
@@ -25,9 +31,6 @@ const useStyles = (theme) => ({
     'background-color': GRAY_2, 
     width : '160pt',
     // display: 'grid',
-  },
-  serverTalk:{
-    width : '62vw',
   },
 });
 
@@ -73,11 +76,10 @@ class ServerPage extends React.Component{
                   > <strong># 幹話R你各位</strong>
                   </typography>                  
               </div>
-              <hr className={classes.serverHR} style={{'width':'62vw'}}/>    
-            </div>            
-
+              <hr className={classes.serverHR} style={{'width':'62vw'}}/> 
+              <ServerTalkArea/>
+            </div>
             <ServerMemberPage/>
-
           </div>
         </div>
       );

@@ -21,12 +21,25 @@ class ServerChat extends React.Component{
     // initialize
     constructor(props){
         super(props);
+        this.state={
+          channel:[],
+          member:[],
+          message:[],
+        }
         // this.state = {date:new Date()};
     }
     // mount component(render to DOM), only once
     componentDidMount(){}
     // unmount component, only once
     componentWillUnmount(){}
+
+    getChannel(){
+      return this.state.channel;
+    }
+
+    getMember(){
+      return this.state.member;
+    }
 
     render(){
       const classes = this.props.classes;
