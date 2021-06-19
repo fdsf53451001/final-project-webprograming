@@ -38,11 +38,60 @@ class ServerPage extends React.Component{
     constructor(props){
         super(props);
         // this.state = {date:new Date()};
+        this.state={
+          member:[
+            {rank:'lvl1',
+              member:[
+                {userid:1,avater:'avater',nick:'nick',state:'state',online:true},
+                {userid:2,avater:'avater',nick:'nick2',state:'state',online:true},
+                {userid:2,avater:'avater',nick:'nick3',state:'state',online:true},
+              ]
+            }
+          ],
+          message:[{
+            group:'文字頻道',rooms:[{
+              room:'幹話R你各位',type:'text',chat:[
+                {time:'2021-06-14',userid:1,nick:'nick',message:'message'},
+                {time:'2021-06-15',userid:1,nick:'nick',message:'message'},
+                {time:'2021-06-16',userid:1,nick:'nick',message:'message'},
+                {time:'2021-06-17',userid:1,nick:'nick',message:'message'},
+                {time:'2021-06-18',userid:1,nick:'nick',message:'message'},            
+              ]
+            }
+            ]            
+          }
+          ]
+        }
+        this.getMember = this.getMember.bind(this);
+        this.getMessage = this.getMessage.bind(this);
+
+        this.loadMember = this.loadMember.bind(this);
+        this.loadMessage = this.loadMessage.bind(this);
     }
     // mount component(render to DOM), only once
     componentDidMount(){}
     // unmount component, only once
-    componentWillUnmount(){}
+    componentWillUnmount(){}    
+
+    loadMember(){
+
+    }
+
+    getMember(){
+      return this.state.member;
+    }
+
+    loadMessage(){
+
+    }
+
+    getMessage(){
+      return this.state.message;
+    }
+
+    sendMessage(){
+      
+    }
 
     render(){
       const classes = this.props.classes;
@@ -66,7 +115,9 @@ class ServerPage extends React.Component{
                 <hr className={classes.serverHR} style={{'width':'160pt'}}/>   
                 <ServerChannel/>
                 <hr className={classes.serverHR} style={{'width':'160pt'}}/> 
-                <PersonStatus/>
+                <PersonStatus setCurrentPage={this.props.setCurrentPage}
+                              getUserData={this.props.getUserData}
+                />
             </div>            
             <div class={classes.serverTalk}>
               <div className='serverChannelName' style={{height:'50px',display:'flex'}}>
@@ -74,13 +125,13 @@ class ServerPage extends React.Component{
                   component="h4" 
                   variant="h4"
                   style={{color:'white',margin:'12pt 15pt'}}
-                  > <strong># 幹話R你各位</strong>
+                  > <strong># {this.state.message[0]['rooms'][0]['room']}</strong>
                   </typography>                  
               </div>
               <hr className={classes.serverHR} style={{'width':'62vw'}}/> 
-              <ServerTalkArea getMessage={this.props.getMessage}/>
+              <ServerTalkArea getMessage={this.getMessage}/>
             </div>
-            <ServerMemberPage/>
+            <ServerMemberPage getMember={this.getMember}/>
           </div>
         </div>
       );

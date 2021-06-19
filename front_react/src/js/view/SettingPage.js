@@ -62,12 +62,16 @@ class SettingPage extends React.Component{
     // initialize
     constructor(props){
         super(props);
-        // this.state = {date:new Date()};
+        this.onExitButtonClick = this.onExitButtonClick.bind(this);
     }
     // mount component(render to DOM), only once
     componentDidMount(){}
     // unmount component, only once
     componentWillUnmount(){}
+
+    onExitButtonClick(){
+      this.props.returnLastPage();
+    }
 
     render(){
       const classes = this.props.classes;
@@ -99,7 +103,9 @@ class SettingPage extends React.Component{
                 {/* <DonatePage/> */}
               </div>
               <div className={classes.settingExit}>
-                <IconButton className={classes.serverIcon}>
+                <IconButton className={classes.serverIcon}
+                            onClick={this.onExitButtonClick}
+                >
                   <HighlightOffIcon style={{color:'white'}} fontSize="large"/>
                 </IconButton>
               </div>              

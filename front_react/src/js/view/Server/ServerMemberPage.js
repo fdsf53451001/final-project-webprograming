@@ -41,11 +41,36 @@ class ServerMemberPage extends React.Component{
     // unmount component, only once
     componentWillUnmount(){}
 
+    memberItemProvider(){
+      const classes = this.props.classes;
+      let MsgArray = [];
+
+      for(let rank=0;rank<this.props.getMember().length;rank++){ //level
+        for(let person=0;person<this.props.getMember()[rank]['member'].length;person++){
+          MsgArray.push((
+            <div class={classes.serverMemberItem}>
+                <Avatar className={classes.serverMemberIcon} 
+                        alt="Doge"
+                        src={Doge}
+                />
+                <typography className={classes.serverMemberName}
+                            component="h3" 
+                            variant="h3"
+                > <strong>{this.props.getMember()[rank]['member'][person]['nick']}</strong>
+                </typography>
+            </div>
+          ));
+        }
+      }
+
+      return MsgArray;
+    }
+
     render(){
       const classes = this.props.classes;
       return(        
         <div class={classes.serverMember}>
-            <div class={classes.serverMemberItem}>
+            {/* <div class={classes.serverMemberItem}>
                 <Avatar className={classes.serverMemberIcon} 
                         alt="Doge"
                         src={Doge}
@@ -77,7 +102,10 @@ class ServerMemberPage extends React.Component{
                             variant="h3"
                 > <strong>Toby Yooo</strong>
                 </typography>
-            </div>
+            </div> */}
+
+            {this.memberItemProvider()}
+
         </div>
       );
     }

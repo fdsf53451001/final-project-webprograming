@@ -36,12 +36,16 @@ class PersonStatus extends React.Component{
     // initialize
     constructor(props){
         super(props);
-        // this.state = {date:new Date()};
+        this.onPersonSettingClick = this.onPersonSettingClick.bind(this);
     }
     // mount component(render to DOM), only once
     componentDidMount(){}
     // unmount component, only once
     componentWillUnmount(){}
+
+    onPersonSettingClick(e){
+        this.props.setCurrentPage('personSetting');
+    }
 
     render(){
       const classes = this.props.classes;
@@ -56,7 +60,7 @@ class PersonStatus extends React.Component{
                     <typography className={classes.chatItemName}
                                 component="h3" 
                                 variant="h3"
-                    > <strong>Toby</strong>
+                    > <strong>{this.props.getUserData()['userName']}</strong>
                     </typography> 
                     <br/>
                     <typography className={classes.chatItemText}
@@ -65,7 +69,9 @@ class PersonStatus extends React.Component{
                     >#1234
                     </typography> 
                 </div>
-                <IconButton style={{margin:'5pt 0pt 0pt 20pt',height:'20pt'}}>
+                <IconButton style={{margin:'5pt 0pt 0pt 20pt',height:'20pt'}}
+                            onClick={this.onPersonSettingClick}
+                >
                     <SettingsIcon color="action" />
                 </IconButton>  
             </div>               

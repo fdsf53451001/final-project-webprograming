@@ -34,41 +34,34 @@ const useStyles = (theme) => ({
   },
   textField:{
     color:'white',
-    margin:'20pt 0pt 0pt 0pt',
+    margin:'10pt 0pt 0pt 0pt',
     width:'30vw',
     'background-color':'#303339',
   },
   loginButton:{
     width:'30vw',
     margin:'20pt 0pt 0pt 0pt',
-  },
-  registerButton:{
-    color:'#999B9F',
-    margin:'0 0 0 25vw',
   }
 });
 
-class LoginPage extends React.Component{
+class RegisterPage extends React.Component{
     // initialize
     constructor(props){
         super(props);
         this.state={
           inputUsername:'',
           inputPassword:'',
+          inputNickName:'',
         }
-        this.onRegisterButtonClick = this.onRegisterButtonClick.bind(this);
-        this.onLoginButtonClick = this.onLoginButtonClick.bind(this);
         this.onUsernameChange = this.onUsernameChange.bind(this);
         this.onPasswordChange = this.onPasswordChange.bind(this);
+        this.onNicknameChange = this.onNicknameChange.bind(this);
+        this.onRegisterButtonClick = this.onRegisterButtonClick.bind(this);
     }
     // mount component(render to DOM), only once
     componentDidMount(){}
     // unmount component, only once
     componentWillUnmount(){}
-
-    onRegisterButtonClick(){
-      this.props.setCurrentPage('register');
-    }
 
     onUsernameChange(e){
       this.setState({inputUsername:e.target.value})
@@ -78,11 +71,15 @@ class LoginPage extends React.Component{
       this.setState({inputPassword:e.target.value})
     }
 
-    onLoginButtonClick(e){
-      if(this.state.inputUsername==='' || this.state.inputPassword===''){
+    onNicknameChange(e){
+      this.setState({inputNickname:e.target.value})
+    }
+
+    onRegisterButtonClick(e){
+      if(this.state.inputUsername==='' || this.state.inputPassword==='' || this.state.inputNickname===''){
         return;
       }
-      this.props.Login(this.state.inputUsername,this.state.inputPassword);
+      this.props.Register(this.state.inputUsername,this.state.inputNickname,this.state.inputPassword);
     }
 
     render(){
@@ -103,6 +100,21 @@ class LoginPage extends React.Component{
                         style={{top:'6vh',color:'#999B9F',margin:'5pt 0pt 0pt 0pt'}}
               >我們很高興又見到您了！
               </Typography>
+              <TextField
+                className={[classes.inputText,classes.textField].join(' ')}
+                InputProps={{
+                  className: classes.multilineColor
+                }}
+                style={{}}
+                variant="outlined"
+                required
+                id="nick"
+                label="暱稱"
+                name="nick"
+                autoFocus
+                onChange={this.onNicknameChange}
+              />
+              <br/>
               <TextField
                 className={[classes.inputText,classes.textField].join(' ')}
                 InputProps={{
@@ -138,14 +150,10 @@ class LoginPage extends React.Component{
                       type="submit"
                       variant="contained"
                       color="primary"
-                      style={{}}   
-                      onClick={this.onLoginButtonClick}                 
+                      style={{}}    
+                      onClick={this.onRegisterButtonClick}                
               >
-                登入
-              </Button>
-              <br/>
-              <Button className={classes.registerButton} onClick={this.onRegisterButtonClick}>
-                我要註冊                
+                註冊
               </Button>
             </div>
             <div className='CardRight'>
@@ -178,4 +186,4 @@ class LoginPage extends React.Component{
     }
 }
   
-export default withStyles(useStyles)(LoginPage)
+export default withStyles(useStyles)(RegisterPage)
