@@ -2,8 +2,8 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 
-import DiscordIcon from '../../../img/discord.png';
-import Doge from '../../../img/doge.png';
+import DiscordIcon from '../../img/discord.png';
+import Doge from '../../img/doge.png';
 import AddIcon from '@material-ui/icons/Add';
 import ExploreIcon from '@material-ui/icons/Explore';
 import IconButton from '@material-ui/core/IconButton';

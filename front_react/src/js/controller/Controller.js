@@ -2,6 +2,7 @@ import { ContactsOutlined, ThreeSixtySharp } from '@material-ui/icons';
 import React from 'react';
 import LoginPage from '../view/LoginPage';
 import ServerChat from '../view/ServerChat';
+import SettingPage from '../view/SettingPage';
 
 class Controller extends React.Component{    
     constructor(props){
@@ -14,6 +15,7 @@ class Controller extends React.Component{
         return(
             // <LoginPage/>
             <ServerChat/>
+            // <SettingPage/>
         );
     }
 }

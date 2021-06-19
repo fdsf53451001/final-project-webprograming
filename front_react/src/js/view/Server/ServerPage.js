@@ -6,6 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ServerMemberPage from './ServerMemberPage';
 import ServerChannel from './ServerChannel';
 import ServerTalkArea from './ServerTalkArea';
+import PersonStatus from '../PersonStatus';
 
 import Doge from '../../../img/doge.png';
 import Avatar from '@material-ui/core/Avatar';
@@ -24,14 +25,12 @@ const useStyles = (theme) => ({
   serverHR:{
     'border-color':GRAY_1,    
     height:'0pt',
-    // position:'absolute',
-    // margin:'50px 0',
   },
   serverInfo:{
     'background-color': GRAY_2, 
     width : '160pt',
     // display: 'grid',
-  },
+  },  
 });
 
 class ServerPage extends React.Component{
@@ -57,27 +56,29 @@ class ServerPage extends React.Component{
                     <typography
                     component="h4" 
                     variant="h4"
-                    style={{color:'white',margin:'10pt 15pt'}}
+                    style={{color:'white',margin:'12pt 17pt'}}
                     > <strong>Dogeeeee</strong>
                     </typography>                    
-                    <IconButton style={{margin:'10pt 0pt 0pt 20pt',height:'20pt'}}>
+                    <IconButton style={{margin:'12pt 0pt 0pt 20pt',height:'20pt'}}>
                         <SettingsIcon color="action" />
                     </IconButton>                    
                 </div>  
                 <hr className={classes.serverHR} style={{'width':'160pt'}}/>   
-                <ServerChannel/>           
+                <ServerChannel/>
+                <hr className={classes.serverHR} style={{'width':'160pt'}}/> 
+                <PersonStatus/>
             </div>            
             <div class={classes.serverTalk}>
               <div className='serverChannelName' style={{height:'50px',display:'flex'}}>
                   <typography
                   component="h4" 
                   variant="h4"
-                  style={{color:'white',margin:'10pt 15pt'}}
+                  style={{color:'white',margin:'12pt 15pt'}}
                   > <strong># 幹話R你各位</strong>
                   </typography>                  
               </div>
               <hr className={classes.serverHR} style={{'width':'62vw'}}/> 
-              <ServerTalkArea/>
+              <ServerTalkArea getMessage={this.props.getMessage}/>
             </div>
             <ServerMemberPage/>
           </div>

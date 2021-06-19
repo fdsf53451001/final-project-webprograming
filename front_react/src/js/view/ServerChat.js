@@ -2,7 +2,7 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
 import ServerPage from './Server/ServerPage';
-import ServerListPage from './Server/ServerListPage';
+import ServerListPage from './ServerListPage';
 
 var GRAY_1 = '#202225';
 var GRAY_2 = '#2F3136';
@@ -23,10 +23,24 @@ class ServerChat extends React.Component{
         super(props);
         this.state={
           channel:[],
-          member:[],
-          message:[],
+          member:[{rank:'lvl1',member:[{userid:1,avater:'avater',nick:'nick',state:'state',online:true}]}],
+          message:[{
+            group:'文字頻道',rooms:[{
+              room:'幹話R你各位',type:'text',chat:[
+                {time:'2021-06-14',userid:1,nick:'nick',message:'message'},
+                {time:'2021-06-15',userid:1,nick:'nick',message:'message'},
+                {time:'2021-06-16',userid:1,nick:'nick',message:'message'},
+                {time:'2021-06-17',userid:1,nick:'nick',message:'message'},
+                {time:'2021-06-18',userid:1,nick:'nick',message:'message'},            
+              ]
+            }
+            ]            
+          }
+          ]
         }
-        // this.state = {date:new Date()};
+        this.getChannel = this.getChannel.bind(this);
+        this.getMember = this.getMember.bind(this);
+        this.getMessage = this.getMessage.bind(this);
     }
     // mount component(render to DOM), only once
     componentDidMount(){}
@@ -41,6 +55,10 @@ class ServerChat extends React.Component{
       return this.state.member;
     }
 
+    getMessage(){
+      return this.state.message;
+    }
+
     render(){
       const classes = this.props.classes;
       return(
@@ -48,7 +66,7 @@ class ServerChat extends React.Component{
                       
           <ServerListPage/>
 
-          <ServerPage/> 
+          <ServerPage getMessage={this.getMessage}/> 
 
         </div>
       );

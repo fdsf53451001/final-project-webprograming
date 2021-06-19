@@ -7,8 +7,8 @@ var GRAY_3 = '#36393F';
 var GRAY_WORD = '#999B9F';
 
 const useStyles = (theme) => ({
-    serverChannelItem:{
-        
+    serverChannel:{
+        height:'75vh',
     },
 });
 
@@ -26,7 +26,7 @@ class ServerPage extends React.Component{
     render(){
       const classes = this.props.classes;
       return(
-        <div className='serverChannel'>
+        <div className={classes.serverChannel}>
             <div className='serverChannelItem'>
                 <typography variant="caption" display="block" gutterBottom
                     style={{color: GRAY_WORD,position:'relative',margin:'15pt 15pt'}}
