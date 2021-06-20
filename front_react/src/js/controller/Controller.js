@@ -50,8 +50,8 @@ class Controller extends React.Component{
                 console.log('Login Failed');
                 return;
             }
-            this.state.user['userid']=username;
-            this.state.user['userName']=username;
+            this.state.user['userid']=result.data.id;
+            this.state.user['userName']=result.data.nickname;
             this.setState(
                 {   isLogin:true,
                     user:this.state.user,
