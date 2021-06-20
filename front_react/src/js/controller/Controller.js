@@ -4,6 +4,7 @@ import LoginPage from '../view/LoginPage';
 import ServerChat from '../view/ServerChat';
 import SettingPage from '../view/SettingPage';
 import RegisterPage from '../view/RegisterPage';
+import MainPage from '../view/MainPage';
 import { apiLogin, apiRegister } from '../view/Api/API';
 import {initGA,logPageView} from '../google_analysis/ga';
 
@@ -17,7 +18,7 @@ class Controller extends React.Component{
                 userName:'Toby',
                 userIcon:'',
             },
-            currentPage:'login',
+            currentPage:'mainpage',
             lastPage:'',
         }
         this.isLogin = this.isLogin.bind(this);
@@ -96,6 +97,9 @@ class Controller extends React.Component{
     render(){
         if(!this.state.isLogin){
             switch(this.state.currentPage){
+                case 'mainpage':
+                    return(<MainPage setCurrentPage={this.setCurrentPage}
+                            />);
                 case 'login':
                     return(<LoginPage 
                                 setCurrentPage={this.setCurrentPage}
