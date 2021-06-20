@@ -54,10 +54,10 @@ class Controller extends React.Component{
             this.state.user['userName']=username;
             this.setState(
                 {   isLogin:true,
-                    currentPage:'serverChat',
                     user:this.state.user,
                 }
             );
+            this.setCurrentPage('serverChat');
             console.log(this.state.user);
         });
     }
@@ -69,7 +69,7 @@ class Controller extends React.Component{
                 return;
             }
             console.log('Login Success');
-            this.setState({currentPage:'login'});
+            this.setCurrentPage('login');
         });
     }
 
