@@ -8,5 +8,6 @@ export const initGA = () => {
 export const logPageView = (page) => {
     console.log('Logging pageview for '+page)
     ReactGA.set({ page: page })
+    ReactGA.send({ page: page })
     ReactGA.pageview(page)
-  }
+}
