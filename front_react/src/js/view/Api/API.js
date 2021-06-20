@@ -5,10 +5,11 @@ const userRequest = axios.create({
 });
 
 export const apiLogin = function(username,password){
-    return (userRequest.get('/update_user',{
+    return (userRequest.get('/login',{
         params:{
             user_id:username,
-            password:password 
+            password:password,
+            login_check:'True',
         }
     }));
 }
@@ -19,7 +20,31 @@ export const apiRegister = function(user_id,nickname,password){
             user_id:user_id,
             nickname:nickname,
             password:password,
-            login_check:false,
+            login_check:'False',
         }
+    }));
+}
+
+export const apiSendMessage = function(user_id,nickname,message){
+    return (userRequest.get('/add_room_detail',{
+        params:{
+            user_id:user_id,
+            nickname:nickname,
+            content:message,
+            room_id:'1',
+            room_title:'test',
+        }
+    }));
+}
+
+export const apiGetMessage = function(){
+    return (userRequest.get('/room_content',{
+        params:{}
+    }));
+}
+
+export const apiGetMember = function(){
+    return (userRequest.get('/user',{
+        params:{}
     }));
 }

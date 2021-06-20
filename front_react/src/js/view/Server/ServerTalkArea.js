@@ -53,12 +53,27 @@ class ServerTalkArea extends React.Component{
     // initialize
     constructor(props){
         super(props);
-        // this.state = {date:new Date()};
+        this.state={
+          inputTalkText:'',
+        }
+        this.onTalkInputKeyDown = this.onTalkInputKeyDown.bind(this);
+        this.onTalkInputChange = this.onTalkInputChange.bind(this);
     }
     // mount component(render to DOM), only once
     componentDidMount(){}
     // unmount component, only once
     componentWillUnmount(){}
+
+    onTalkInputKeyDown(e){
+      if(e.which === 13){
+        this.setState({inputTalkText:e.target.value});
+        this.props.sendMessage(this.state.inputTalkText);
+      }
+    }
+
+    onTalkInputChange(e){
+      this.setState({inputTalkText:e.target.value});
+    }
 
     talkItemProvider(){
       const classes = this.props.classes;
@@ -113,6 +128,8 @@ class ServerTalkArea extends React.Component{
                        InputProps={{
                          className: classes.multilineColor
                        }}
+                       onKeyDown={this.onTalkInputKeyDown}
+                       onChange={this.onTalkInputChange}
             />
           </div>
         </div>  

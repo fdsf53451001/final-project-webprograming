@@ -1,33 +1,37 @@
-import { ContactsOutlined, ThreeSixtySharp } from '@material-ui/icons';
+import { ContactsOutlined, ThreeSixtySharp, TrendingUpOutlined } from '@material-ui/icons';
 import React from 'react';
 import LoginPage from '../view/LoginPage';
 import ServerChat from '../view/ServerChat';
 import SettingPage from '../view/SettingPage';
 import RegisterPage from '../view/RegisterPage';
 import { apiLogin, apiRegister } from '../view/Api/API';
+import {initGA,logPageView} from '../google_analysis/ga';
 
 class Controller extends React.Component{    
     constructor(props){
         super(props);
         this.state={
-            isLogin:true,
+            isLogin:false,
             user:{
                 userid:'1',
                 userName:'Toby',
                 userIcon:'',
             },
-            currentPage:'serverChat',
+            currentPage:'login',
             lastPage:'',
         }
         this.isLogin = this.isLogin.bind(this);
         this.changeLogin = this.changeLogin(this);
         this.setCurrentPage = this.setCurrentPage.bind(this);
         this.Login = this.Login.bind(this);
+        this.Register = this.Register.bind(this);
         this.returnLastPage = this.returnLastPage.bind(this);
         this.getUserData = this.getUserData.bind(this);
     }
 
-    componentDidMount(){}
+    componentDidMount(){
+        initGA();
+    }
     componentWillUnmount(){}
 
     isLogin(){
@@ -42,21 +46,35 @@ class Controller extends React.Component{
 
     Login(username,password){
         apiLogin(username,password).then(result => {
-            if(result){
-                console.log(result);
+            if(result.status!==200){
+                console.log('Login Failed');
+                return;
             }
+            this.state.user['userid']=username;
+            this.state.user['userName']=username;
+            this.setState(
+                {   isLogin:true,
+                    currentPage:'serverChat',
+                    user:this.state.user,
+                }
+            );
+            console.log(this.state.user);
         });
     }
 
-    Register(username,password,nickname){
+    Register(username,nickname,password){
         apiRegister(username,nickname,password).then(result => {
-            if(result){
-                console.log(result);
+            if(result.status!==200){
+                console.log('Login Failed');
+                return;
             }
+            console.log('Login Success');
+            this.setState({currentPage:'login'});
         });
     }
 
     setCurrentPage(page){
+        logPageView(page);
         this.setState(
             {lastPage:this.state.currentPage,
              currentPage:page
@@ -65,6 +83,7 @@ class Controller extends React.Component{
     }
 
     returnLastPage(){
+        logPageView(this.state.lastPage);
         this.setState(
             {currentPage:this.state.lastPage}
         );
@@ -103,6 +122,7 @@ class Controller extends React.Component{
             case 'personSetting':
                 return (<SettingPage
                             returnLastPage={this.returnLastPage}
+                            getUserData={this.getUserData}
                         />                    
                 );
             default:

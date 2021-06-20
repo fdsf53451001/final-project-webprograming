@@ -62,7 +62,12 @@ class SettingPage extends React.Component{
     // initialize
     constructor(props){
         super(props);
+        this.state={
+          settingPage:'normal',
+        }
         this.onExitButtonClick = this.onExitButtonClick.bind(this);
+        this.setSettingPage = this.setSettingPage.bind(this);
+        this.settingPageProvider = this.settingPageProvider.bind(this);
     }
     // mount component(render to DOM), only once
     componentDidMount(){}
@@ -73,6 +78,21 @@ class SettingPage extends React.Component{
       this.props.returnLastPage();
     }
 
+    setSettingPage(page){
+      this.setState({settingPage:page})
+    }
+
+    settingPageProvider(){
+      switch(this.state.settingPage){
+        case 'normal':
+          return (<AccountSetting getUserData={this.props.getUserData}/>);
+        case 'donate':
+         return (<DonatePage/>);
+        default:
+          return (<h1>Error Happened!</h1>);
+      }
+    }
+
     render(){
       const classes = this.props.classes;
       return(
@@ -81,10 +101,10 @@ class SettingPage extends React.Component{
               <div className={classes.settingLeftBox}>
                 <List component="nav">
                   <ListItem button className={classes.settingListItem}>
-                    <ListItemText className={classes.colorWhite}>我的帳號</ListItemText>
+                    <ListItemText className={classes.colorWhite} onClick={e=>{this.setSettingPage('normal');}}>我的帳號</ListItemText>
                   </ListItem>
                   <ListItem button className={classes.settingListItem}>
-                    <ListItemText className={classes.colorWhite}>隱私&安全</ListItemText>
+                    <ListItemText className={classes.colorWhite} onClick={e=>{this.setSettingPage('donate');}}>關於我們</ListItemText>
                   </ListItem>
                   <ListItem button className={classes.settingListItem}>
                     <ListItemText className={classes.colorWhite}>已授權的應用程式</ListItemText>
@@ -98,9 +118,7 @@ class SettingPage extends React.Component{
             </div>
             <div className={classes.settingRight}>
               <div className={classes.settingRightBox}>
-                {/* setting_page or donate_page */}
-                <AccountSetting/>
-                {/* <DonatePage/> */}
+                {this.settingPageProvider()}
               </div>
               <div className={classes.settingExit}>
                 <IconButton className={classes.serverIcon}

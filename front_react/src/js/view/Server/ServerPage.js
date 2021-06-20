@@ -12,6 +12,7 @@ import Doge from '../../../img/doge.png';
 import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import { apiGetMessage, apiSendMessage , apiGetMember } from '../Api/API';
 
 var GRAY_1 = '#202225';
 var GRAY_2 = '#2F3136';
@@ -42,20 +43,20 @@ class ServerPage extends React.Component{
           member:[
             {rank:'lvl1',
               member:[
-                {userid:1,avater:'avater',nick:'nick',state:'state',online:true},
-                {userid:2,avater:'avater',nick:'nick2',state:'state',online:true},
-                {userid:2,avater:'avater',nick:'nick3',state:'state',online:true},
+                // {userid:1,avater:'avater',nick:'nick',state:'state',online:true},
+                // {userid:2,avater:'avater',nick:'nick2',state:'state',online:true},
+                // {userid:2,avater:'avater',nick:'nick3',state:'state',online:true},
               ]
             }
           ],
           message:[{
             group:'文字頻道',rooms:[{
               room:'幹話R你各位',type:'text',chat:[
-                {time:'2021-06-14',userid:1,nick:'nick',message:'message'},
-                {time:'2021-06-15',userid:1,nick:'nick',message:'message'},
-                {time:'2021-06-16',userid:1,nick:'nick',message:'message'},
-                {time:'2021-06-17',userid:1,nick:'nick',message:'message'},
-                {time:'2021-06-18',userid:1,nick:'nick',message:'message'},            
+                // {time:'2021-06-14',userid:1,nick:'nick',message:'message'},
+                // {time:'2021-06-15',userid:1,nick:'nick',message:'message'},
+                // {time:'2021-06-16',userid:1,nick:'nick',message:'message'},
+                // {time:'2021-06-17',userid:1,nick:'nick',message:'message'},
+                // {time:'2021-06-18',userid:1,nick:'nick',message:'message'},            
               ]
             }
             ]            
@@ -64,17 +65,39 @@ class ServerPage extends React.Component{
         }
         this.getMember = this.getMember.bind(this);
         this.getMessage = this.getMessage.bind(this);
+        this.sendMessage = this.sendMessage.bind(this);
 
         this.loadMember = this.loadMember.bind(this);
         this.loadMessage = this.loadMessage.bind(this);
     }
     // mount component(render to DOM), only once
-    componentDidMount(){}
+    componentDidMount(){
+      this.loadMessage();
+      this.loadMember();
+    }      
     // unmount component, only once
     componentWillUnmount(){}    
 
     loadMember(){
-
+      apiGetMember().then(result => {
+        if(result.status!==200){
+            console.log('Load Message Failed');
+            return;
+        }
+        // console.log(result);
+        this.state.member[0]['member'].length=0;
+        for(let i=0;i<result.data.data.length;i++){
+          this.state.member[0]['member'].push({
+            userid:result.data.data[i]['id'],
+            avater:'avater',
+            nick:result.data.data[i]['nickname'],
+            state:'',
+            online:result.data.data[i]['login_check'],
+          });          
+        }
+        console.log(this.state.member);
+        this.setState({member:this.state.member});        
+      });
     }
 
     getMember(){
@@ -82,15 +105,42 @@ class ServerPage extends React.Component{
     }
 
     loadMessage(){
+      apiGetMessage().then(result => {
+        if(result.status!==200){
+            console.log('Load Message Failed');
+            return;
+        }
+        console.log(result);
+        this.state.message[0]['rooms'][0]['chat'].length=0;
+        for(let i=0;i<result.data.length;i++){
+          this.state.message[0]['rooms'][0]['chat'].push({
+            time:result.data[i]['date'],
+            userid:result.data[i]['id'],
+            nick:result.data[i]['nickname'],
+            message:result.data[i]['cotent'],
+          });          
+        }
 
+        this.setState({message:this.state.message});
+        
+      });
     }
 
     getMessage(){
       return this.state.message;
     }
 
-    sendMessage(){
-      
+    sendMessage(message){
+      let userid = this.props.getUserData()['userid'];
+      let userName = this.props.getUserData()['userName'];
+      apiSendMessage(userid,userName,message).then(result => {
+        if(result.status!==200){
+            console.log('Send Message Failed');
+            return;
+        }
+        console.log('Send',message); 
+        this.loadMessage();       
+      });      
     }
 
     render(){
@@ -129,7 +179,9 @@ class ServerPage extends React.Component{
                   </typography>                  
               </div>
               <hr className={classes.serverHR} style={{'width':'62vw'}}/> 
-              <ServerTalkArea getMessage={this.getMessage}/>
+              <ServerTalkArea getMessage={this.getMessage}
+                              sendMessage={this.sendMessage}
+              />
             </div>
             <ServerMemberPage getMember={this.getMember}/>
           </div>

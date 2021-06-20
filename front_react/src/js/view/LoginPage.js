@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 
 import firepot from '../../img/firepot.png';
 import login_bg from '../../img/login_bg.jpg'
+// import login_bg from '../../img/mainpage.jpg'
 
 const useStyles = (theme) => ({
   loginPage:{
