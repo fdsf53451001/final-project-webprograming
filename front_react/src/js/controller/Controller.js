@@ -31,7 +31,7 @@ class Controller extends React.Component{
     }
 
     componentDidMount(){
-        initGA();
+        // initGA();
     }
     componentWillUnmount(){}
 
@@ -75,7 +75,7 @@ class Controller extends React.Component{
     }
 
     setCurrentPage(page){
-        logPageView(page);
+        // logPageView(page);
         this.setState(
             {lastPage:this.state.currentPage,
              currentPage:page
@@ -84,7 +84,7 @@ class Controller extends React.Component{
     }
 
     returnLastPage(){
-        logPageView(this.state.lastPage);
+        // logPageView(this.state.lastPage);
         this.setState(
             {currentPage:this.state.lastPage}
         );
